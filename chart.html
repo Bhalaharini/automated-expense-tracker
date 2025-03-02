@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Expense Pie Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f4; }
+        canvas { margin: auto; }
+    </style>
+</head>
+<body>
+    <h2>Expense Distribution by Category</h2>
+    <canvas id="expenseChart" width="400" height="400"></canvas>
+    <script>
+        // Data passed from Flask (using the tojson filter)
+        const labels = {{ labels|tojson }};
+        const values = {{ values|tojson }};
+
+        const data = {
+            labels: labels,
+            datasets: [{
+                data: values,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(153, 102, 255, 0.6)',
+                    'rgba(255, 159, 64, 0.6)'
+                ]
+            }]
+        };
+
+        const config = {
+            type: 'pie',
+            data: data,
+            options: {}
+        };
+
+        const expenseChart = new Chart(
+            document.getElementById('expenseChart'),
+            config
+        );
+    </script>
+</body>
+</html>
